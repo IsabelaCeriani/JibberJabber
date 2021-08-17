@@ -14,12 +14,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,7 +39,6 @@ class CourseControllerTest {
 
     private CourseRepository courseRepository ;
     private CourseController courseController;
-    private TopicRepository topicRepository;
 
 
     @BeforeEach
@@ -47,14 +48,13 @@ class CourseControllerTest {
 
     @Test
     void getAllCourses() throws Exception {
-        Topic topic = new Topic("1", "", "");
         Course course = new Course("1.0", "","", "1");
-//        topicRepository.save(topic);
-//        courseRepository.save(course);
 
+        //all courses es la solucion correcta de lo que se deberia obtener con getAllCourses(), se pone para testear luego
         List<Course> allCourses = Arrays.asList(course);
-
         Gson gson = new Gson();
+
+        given(service.getAllCourses("1")).willReturn(allCourses);
 
         mvc.perform(get("/topics/1/courses")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -64,18 +64,62 @@ class CourseControllerTest {
     }
 
     @Test
-    void getCourse() {
+    void getCourse() throws Exception {
+        Course course = new Course("1", "","", "1");
+
+        Gson gson = new Gson();
+
+        given(service.getCourse("1")).willReturn(course);
+
+//        mvc.perform(get("/topics/1/courses/1")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(gson.toJson(course)));
     }
 
     @Test
-    void addCourse() {
+    void addCourse() throws Exception {
+        Course course = new Course("1", "","", "1");
+        Gson gson = new Gson();
+
+        mvc.perform(post("/topics/1/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(course))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(""))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());//is created?
     }
 
     @Test
-    void updateCourse() {
+    void updateCourse() throws Exception {
+
+        Course course = new Course("1", "","", "1");
+        service.addCourse(course);
+
+        Course changedCourse = new Course("1", "changed","changed", "1");
+
+        Gson gson = new Gson();
+
+
+        mvc.perform(put("/topics/1/courses/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(changedCourse))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(""))
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
-    void deleteCourse() {
+    void deleteCourse() throws Exception {
+//        mvc.perform(delete("/topics/1/courses/1")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+
+
     }
 }
