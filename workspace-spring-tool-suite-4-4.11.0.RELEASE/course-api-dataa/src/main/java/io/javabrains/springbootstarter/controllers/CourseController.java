@@ -17,32 +17,32 @@ public class CourseController {
 	
 	
 	@GetMapping("/topics/{id}/courses")
-	public List<Course> getAllCourses(@PathVariable String id) {
+	public List<Course> getAllCourses(@PathVariable int id) {
 		return courseService.getAllCourses(id); 
 	}
 	
 	
 	@GetMapping("/topics/{topicId}/courses/{courseId}")
-	public Course getCourse(@PathVariable String id) {
+	public Course getCourse(@PathVariable int id) {
 		return courseService.getCourse(id);
 	}
 	
 	
 	@PostMapping("/topics/{topicId}/courses")
-	public void addCourse(@RequestBody Course course, @PathVariable String topicId) {
-		course.setTopic(new Topic(topicId, "", ""));
-		courseService.addCourse(course); 
+	public void addCourse(@RequestBody Course course, @PathVariable int topicId) {
+		course.setTopic(new Topic("", "", topicId));
+		courseService.addCourse(course);
 	}
 	
 	@PutMapping("/topics/{topicId}/courses/{courseId}")
-	public void updateCourse(@RequestBody Course course, @PathVariable String topicId) {
-		course.setTopic(new Topic(topicId, "", ""));
+	public void updateCourse(@RequestBody Course course, @PathVariable int topicId) {
+		course.setTopic(new Topic("", "", topicId));
 		courseService.updateCourse(course); 
 	}
 	
 	
 	@DeleteMapping("/topics/{topicId}/courses/{courseId}")
-	public void deleteCourse (@PathVariable String id) {
+	public void deleteCourse (@PathVariable int id) {
 		 courseService.deleteCourse(id);
 	}
 

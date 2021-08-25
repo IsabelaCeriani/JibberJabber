@@ -11,7 +11,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,12 +26,15 @@ import static org.mockito.Mockito.verify;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
+//@RunWith(MockitoJUnitRunner.class)
 class CourseServiceTest {
 
     @Mock
-    private CourseRepository courseRepository;
+    CourseRepository courseRepository;
     CourseService courseService;
-
+    TopicRepository topicRepository;
+    TopicService topicService;
+//
     @BeforeEach
     void setUp(){
         courseService = new CourseService(courseRepository);
@@ -37,26 +43,17 @@ class CourseServiceTest {
     @Test
     void getAllCourses() {
         //when
-        courseService.getAllCourses("1");
+        courseService.getAllCourses(1);
         //then
-        verify(courseRepository).findByTopicId("1");
+        verify(courseRepository).findByTopicId(1);
     }
 
-    @Test
-    void getCourse() {
-        //given
-//        Course course = new Course("1.0", "","", "1");
-//        courseRepository.save(course);
-        //when
-        courseService.getCourse("1.0");
-        //then
-        verify(courseRepository).findById("1.0");
-    }
 
     @Test
     void addCourse() {
         //given
-        Course course = new Course("1.0", "","", "1");
+        Course course = new Course("","",1);
+
         //when
         courseService.addCourse(course);
         //then
@@ -69,11 +66,5 @@ class CourseServiceTest {
 //        assertThat(capturedTopic).isEqualTo(topic);
     }
 
-    @Test
-    void updateCourse() {
-    }
 
-    @Test
-    void deleteCourse() {
-    }
 }

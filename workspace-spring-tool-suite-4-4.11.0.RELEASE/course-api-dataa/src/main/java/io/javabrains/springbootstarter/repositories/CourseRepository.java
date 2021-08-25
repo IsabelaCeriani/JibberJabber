@@ -5,12 +5,12 @@ import java.util.List;
 import io.javabrains.springbootstarter.entities.Course;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CourseRepository extends CrudRepository<Course, String> {
+public interface CourseRepository extends CrudRepository<Course, Integer> {
 	
 	
-	public List<Course> findByName(String name);
+	List<Course> findByName(String name);
 
-	public Iterable<Course> findByTopicId(String topicId); 
+	Iterable<Course> findByTopicId(int topicId);
 
 
 

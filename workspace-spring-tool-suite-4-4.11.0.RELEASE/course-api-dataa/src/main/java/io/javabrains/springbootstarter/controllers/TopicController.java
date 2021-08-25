@@ -1,6 +1,7 @@
 package io.javabrains.springbootstarter.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 
 import io.javabrains.springbootstarter.entities.Topic;
@@ -18,12 +19,13 @@ public class TopicController {
 	
 	@GetMapping("/topics")
 	public List<Topic> getAllTopics() {
-		return topicService.getAllTopics(); 
+		return (List<Topic>) topicService.getAllTopics();
 	}
+
 	
 	
 	@GetMapping("/topics/{id}")
-	public Topic getTopic(@PathVariable String id) {
+	public Optional<Topic> getTopic(@PathVariable int id) {
 		return topicService.getTopic(id);
 	}
 	
@@ -34,13 +36,13 @@ public class TopicController {
 	}
 	
 	@PutMapping("/topics/{id}")
-	public void updateTopic(@RequestBody Topic topic,  @PathVariable String id) {
+	public void updateTopic(@RequestBody Topic topic,  @PathVariable int id) {
 		topicService.updateTopic(id, topic); 
 	}
 	
 	
 	@DeleteMapping("/topics/{id}")
-	public void deleteTopic(@PathVariable String id) {
+	public void deleteTopic(@PathVariable int id) {
 		 topicService.deleteTopic(id);
 	}
 

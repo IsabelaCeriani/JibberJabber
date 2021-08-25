@@ -1,16 +1,17 @@
 package io.javabrains.springbootstarter.services;
 
-import java.util.List;
+import java.util.Optional;
 
 import io.javabrains.springbootstarter.entities.Topic;
 import io.javabrains.springbootstarter.repositories.TopicRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TopicService {
 	
 	
-//	@Autowired
+	@Autowired
 	private TopicRepository topicRepository;
 
 	public TopicService(TopicRepository topicRepository) {
@@ -20,13 +21,13 @@ public class TopicService {
 	public TopicService() {
 	}
 
-	public List<Topic> getAllTopics() {
-		return (List<Topic>) topicRepository.findAll();
+	public Iterable<Topic> getAllTopics() {
+		return topicRepository.findAll();
 	}
 	
 	
-	public Topic getTopic(String id) {
-		return topicRepository.findById(id).get() ;
+	public Optional<Topic> getTopic(int id) {
+		return topicRepository.findById(id);
 	}
 
 
@@ -35,12 +36,12 @@ public class TopicService {
 	}
 
 
-	public void updateTopic(String id, Topic topic) {
+	public void updateTopic(int id, Topic topic) {
 		topicRepository.save(topic);
 	}
 
 
-	public void deleteTopic(String id) {
+	public void deleteTopic(int id) {
 		topicRepository.deleteById(id); 
 	}
 

@@ -13,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,7 +42,7 @@ class TopicServiceIntTest {
     @Test
     void canAddTopic() {
         //given
-        Topic topic =new Topic("1","","");
+        Topic topic =new Topic("","", 1);
         //when
         topicService.addTopic(topic);
         //then
@@ -56,27 +55,7 @@ class TopicServiceIntTest {
 //        assertThat(capturedTopic).isEqualTo(topic);
     }
 
-    @Test
-    void canGetTopic() {
-        //given
-        Topic topic =new Topic("1","","");
-        topicService.addTopic(topic);
-
-        //then
-
-//        Topic returnedTopic = topicService.getTopic(topic.getId());
-//        verify(topicRepository).findById(topic.getId());
-
-//        Assert.assertEquals(topic, returnedTopic);
-    }
 
 
-    @Test
-    void updateTopic() {
-    }
 
-    @Test
-    void deleteTopic() {
-
-    }
 }

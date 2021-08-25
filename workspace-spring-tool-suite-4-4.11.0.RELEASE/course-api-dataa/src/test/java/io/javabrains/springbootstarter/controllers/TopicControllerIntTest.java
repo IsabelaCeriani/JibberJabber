@@ -54,7 +54,7 @@ class TopicControllerIntTest {
 
     @Test
     void canGetAllTopics() throws Exception {
-        Topic topic = new Topic("1", "", "");
+        Topic topic = new Topic("", "", 1);
 
         List<Topic> allTopics = Collections.singletonList(topic);
 
@@ -71,8 +71,8 @@ class TopicControllerIntTest {
 
     @Test
     void getTopic() throws Exception {
-        Topic topic = new Topic("1", "", "");
-        given(service.getTopic("1")).willReturn(topic);
+        Topic topic = new Topic("", "", 1);
+        given(service.getTopic(1)).willReturn(java.util.Optional.of(topic));
 
         Gson gson = new Gson();
 
@@ -85,7 +85,7 @@ class TopicControllerIntTest {
 
     @Test
     void addTopic() throws Exception {
-        Topic topic = new Topic("1", "", "");
+        Topic topic = new Topic("", "", 1);
         Gson gson = new Gson();
 
         mvc.perform(post("/topics")
@@ -102,10 +102,10 @@ class TopicControllerIntTest {
 
     @Test
     void updateTopic() throws Exception {
-        Topic topic = new Topic("1", "", "");
+        Topic topic = new Topic("", "", 1);
         service.addTopic(topic);
 
-        Topic changedTopic = new Topic("1", "changedName", "changedTopic");
+        Topic changedTopic = new Topic("changedName", "changedTopic", 1);
         Gson gson = new Gson();
 
 
@@ -118,6 +118,8 @@ class TopicControllerIntTest {
                 .andExpect(MockMvcResultMatchers.content()
                 .string(""))
                 .andDo(MockMvcResultHandlers.print());
+
+//        mvc.perform(get())
     }
 
     @Test

@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CourseController.class)
-class CourseControllerTest {
+class CourseControllerIntTest {
 
 
 
@@ -48,13 +48,13 @@ class CourseControllerTest {
 
     @Test
     void getAllCourses() throws Exception {
-        Course course = new Course("1.0", "","", "1");
+        Course course = new Course("","", 1);
 
         //all courses es la solucion correcta de lo que se deberia obtener con getAllCourses(), se pone para testear luego
         List<Course> allCourses = Arrays.asList(course);
         Gson gson = new Gson();
 
-        given(service.getAllCourses("1")).willReturn(allCourses);
+        given(service.getAllCourses(1)).willReturn(allCourses);
 
         mvc.perform(get("/topics/1/courses")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -65,11 +65,12 @@ class CourseControllerTest {
 
     @Test
     void getCourse() throws Exception {
-        Course course = new Course("1", "","", "1");
+        Course course = new Course("","", 1);
+
 
         Gson gson = new Gson();
 
-        given(service.getCourse("1")).willReturn(course);
+        given(service.getCourse(1)).willReturn(course);
 
 //        mvc.perform(get("/topics/1/courses/1")
 //                .contentType(MediaType.APPLICATION_JSON))
@@ -79,7 +80,9 @@ class CourseControllerTest {
 
     @Test
     void addCourse() throws Exception {
-        Course course = new Course("1", "","", "1");
+        Course course = new Course("","", 1);
+
+
         Gson gson = new Gson();
 
         mvc.perform(post("/topics/1/courses")
@@ -93,11 +96,13 @@ class CourseControllerTest {
 
     @Test
     void updateCourse() throws Exception {
+        Course course = new Course("","", 1);
 
-        Course course = new Course("1", "","", "1");
+
+
         service.addCourse(course);
 
-        Course changedCourse = new Course("1", "changed","changed", "1");
+        Course changedCourse = new Course("changed","changed", 1);
 
         Gson gson = new Gson();
 

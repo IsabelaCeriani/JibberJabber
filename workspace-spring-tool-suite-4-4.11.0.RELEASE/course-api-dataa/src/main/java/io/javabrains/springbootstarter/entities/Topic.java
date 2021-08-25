@@ -1,22 +1,26 @@
 package io.javabrains.springbootstarter.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Topic {
-	
+
 	@Id
-	private String id;
+	private int id;
+
+	@Column
 	private String name;
+
+	@Column
 	private String description;
 
-	public String getId() {
+
+	public int getId() {
 		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -33,22 +37,18 @@ public class Topic {
 		this.description = description;
 	}
 
-	public Topic(String id, String name, String description) {
-		super();
-		this.id = id;
+	public Topic(String name, String description, int id) {
 		this.name = name;
 		this.description = description;
+		this.id = id;
 	}
 	
 	public Topic() {
 		
 	}
 
-	@Override
-	public String toString() {
-		return "id='" + id + '\'' +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
-				'}';
-	}
+
+
+
+
 }
